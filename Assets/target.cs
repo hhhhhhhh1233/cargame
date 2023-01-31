@@ -15,6 +15,6 @@ public class target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(anchor.transform.position, Vector3.up, Input.GetAxisRaw("RightStickHorizontal") * 100 * Time.deltaTime);
+        transform.RotateAround(anchor.transform.position, Vector3.up, Input.GetAxisRaw("RightStickHorizontal") * 200 * Time.deltaTime);
     }
 }

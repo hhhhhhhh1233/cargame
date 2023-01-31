@@ -13,6 +13,6 @@ public class NewBehaviourScript2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0,100*Input.GetAxisRaw("RightStickHorizontal")*Time.deltaTime,0);
+        transform.Rotate(0,200*Input.GetAxisRaw("RightStickHorizontal")*Time.deltaTime,0);
     }
 }
