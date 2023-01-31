@@ -60,16 +60,11 @@ public class vehicle : MonoBehaviour
             Vector3 direction = Vector3.right * Input.GetAxisRaw("RightStickHorizontal") + Vector3.back * Input.GetAxisRaw("RightStickVertical");
 			anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1000 * Time.deltaTime);
         }
-		if (isGamepad)
-			Debug.Log("GAMEPAD");
-		else
-		{
-			Debug.Log("KEYBOARD");
-		}
 	}
 
 	public void OnDeviceChange(PlayerInput pi)
 	{
 		isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
+		Debug.Log("HAHAHA");
 	}
 }
