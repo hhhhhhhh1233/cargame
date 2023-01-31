@@ -47,10 +47,11 @@ public class vehicle : MonoBehaviour
 
 		r.AddForce(1000 * (playerControls.Driving.Accelerate.ReadValue<float>() - 0.8f*playerControls.Driving.Decelerate.ReadValue<float>()) * transform.forward * Time.deltaTime);
 
-		if (Input.GetButton("Respawn"))
+		if (Input.GetButton("Respawn") || transform.position.y < -2)
 		{
 			r.velocity = Vector3.zero;
-			transform.SetPositionAndRotation(new Vector3(0,3,0), Quaternion.Euler(0, 0, 0));
+			transform.SetPositionAndRotation(new Vector3(0,3,0), Quaternion.Euler(0, -90, 0));
+			anchor.transform.rotation = new Quaternion(0,0,0,0);
 		}
 		
 		if (playerControls.Driving.Aim.ReadValue<Vector2>().x != 0 && playerControls.Driving.Aim.ReadValue<Vector2>().y != 0)

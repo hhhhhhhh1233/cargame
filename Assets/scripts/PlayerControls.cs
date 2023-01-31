@@ -136,7 +136,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""54249ac3-3d31-4b6d-b4b9-f1d45984ffa2"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone(min=0.2)"",
+                    ""processors"": ""StickDeadzone(min=0.7)"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Aim"",
                     ""isComposite"": false,
