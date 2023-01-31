@@ -7,9 +7,10 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+		r = GetComponent<Rigidbody>();
     }
-    
+
+	Rigidbody r;
 
     // Update is called once per frame
     void Update()
@@ -22,7 +23,9 @@ public class NewBehaviourScript : MonoBehaviour
 
 		//transform.RotateAround(target.transform.position, Vector3.up, 20 * Time.deltaTime);
 
-		transform.position += 10 * triggerInput * transform.forward * Time.deltaTime;
+		r.AddForce(1000 * triggerInput * transform.forward * Time.deltaTime);
+
+		//transform.position += 10 * triggerInput * transform.forward * Time.deltaTime;
 
 		if (Input.GetButton("Fire1"))
 		{
