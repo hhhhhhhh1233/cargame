@@ -44,6 +44,7 @@ public class vehicle : MonoBehaviour
 		float triggerInput = Input.GetAxis("Accelerate");
 
 		r.transform.Rotate(0,120*playerControls.Driving.Steer.ReadValue<float>()*Time.deltaTime,0);
+		anchor.transform.Rotate(0,-120*playerControls.Driving.Steer.ReadValue<float>()*Time.deltaTime,0);
 
 		r.AddForce(1000 * (playerControls.Driving.Accelerate.ReadValue<float>() - 0.8f*playerControls.Driving.Decelerate.ReadValue<float>()) * transform.forward * Time.deltaTime);
 
