@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17757913, g: 0.22232339, b: 0.30451995, a: 1}
+  m_IndirectSpecularColor: {r: 0.17758682, g: 0.22233194, b: 0.3045268, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -425,6 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 545620781}
   - component: {fileID: 545620782}
+  - component: {fileID: 545620783}
   m_Layer: 0
   m_Name: Anchor
   m_TagString: Untagged
@@ -461,6 +462,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac9b805b7cfb5fb0898221b354460e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &545620783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545620780}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 6be48f283b3c008c194e0a0a4664f6d6, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Driving
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &684682877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,6 +1051,7 @@ GameObject:
   - component: {fileID: 1402679528}
   - component: {fileID: 1402679529}
   - component: {fileID: 1402679530}
+  - component: {fileID: 1402679531}
   m_Layer: 0
   m_Name: Vehicle
   m_TagString: Untagged
@@ -1072,6 +1104,52 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1402679531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402679527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 6be48f283b3c008c194e0a0a4664f6d6, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f7093bd-d052-4c3a-9169-6cbf14c049a3
+    m_ActionName: Driving/Steer[/Gamepad/leftStick/left,/Gamepad/leftStick/right,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a96cd4be-b29e-49e6-b7f4-e9c8498aecde
+    m_ActionName: Driving/Aim[/Gamepad/rightStick,/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fea4b37c-f2d5-4116-988e-ac292a7c2633
+    m_ActionName: Driving/Accelerate[/Gamepad/rightTrigger,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: be0182a5-4a78-4913-ad63-824d66991eee
+    m_ActionName: Driving/Decelerate[/Gamepad/leftTrigger,/Keyboard/s]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Driving
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2049697502
 GameObject:
   m_ObjectHideFlags: 0

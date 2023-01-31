@@ -1,10 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+	private PlayerInput playerInput;
+	private CharacterController controller;
+	private PlayerControls playerControls;
+
+	private void Awake()
+	{
+		playerInput = GetComponent<PlayerInput>();
+		controller = GetComponent<CharacterController>();
+		playerControls = new PlayerControls();
+	}
+
+	private void OnEnable()
+	{
+		playerControls.Enable();
+	}
+
+	private void OnDisable()
+	{
+		playerControls.Disable();
+	}
+
     void Start()
     {
 		r = GetComponent<Rigidbody>();
@@ -12,29 +33,15 @@ public class NewBehaviourScript : MonoBehaviour
 
 	Rigidbody r;
 
-    // Update is called once per frame
     void Update()
     {
 		float horizontalInput = Input.GetAxis("Horizontal");
 		float triggerInput = Input.GetAxis("Accelerate");
 
+		transform.Rotate(0,120*playerControls.Driving.Steer.ReadValue<float>()*Time.deltaTime,0);
 
-		transform.Rotate(0,120*horizontalInput*Time.deltaTime,0);
+		r.AddForce(1000 * (playerControls.Driving.Accelerate.ReadValue<float>() - 0.8f*playerControls.Driving.Decelerate.ReadValue<float>()) * transform.forward * Time.deltaTime);
 
-		//transform.RotateAround(target.transform.position, Vector3.up, 20 * Time.deltaTime);
-
-		r.AddForce(1000 * triggerInput * transform.forward * Time.deltaTime);
-
-		//transform.position += 10 * triggerInput * transform.forward * Time.deltaTime;
-
-		if (Input.GetButton("Fire1"))
-		{
-			transform.position += 10 * transform.forward * Time.deltaTime;
-		}
-		if (Input.GetButton("Fire2"))
-		{
-			transform.position += -5 * transform.forward * Time.deltaTime;
-		}
 		if (Input.GetButton("Respawn"))
 		{
 			transform.SetPositionAndRotation(new Vector3(0,3,0), Quaternion.Euler(0, 0, 0));
