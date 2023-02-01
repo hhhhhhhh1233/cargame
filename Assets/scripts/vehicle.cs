@@ -55,16 +55,18 @@ public class vehicle : MonoBehaviour
 			anchor.transform.rotation = new Quaternion(0,0,0,0);
 		}
 		
-		if (playerControls.Driving.Aim.ReadValue<Vector2>().x != 0 && playerControls.Driving.Aim.ReadValue<Vector2>().y != 0)
+		if (isGamepad)
         {
-            Vector3 direction = Vector3.right * Input.GetAxisRaw("RightStickHorizontal") + Vector3.back * Input.GetAxisRaw("RightStickVertical");
-			anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1000 * Time.deltaTime);
+			if (playerControls.Driving.Aim.ReadValue<Vector2>().x != 0 && playerControls.Driving.Aim.ReadValue<Vector2>().y != 0)
+			{
+			    Vector3 direction = Vector3.right * playerControls.Driving.Aim.ReadValue<Vector2>().x + Vector3.forward * playerControls.Driving.Aim.ReadValue<Vector2>().y;
+				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1500 * Time.deltaTime);
+			}
         }
 	}
 
 	public void OnDeviceChange(PlayerInput pi)
 	{
 		isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
-		Debug.Log("HAHAHA");
 	}
 }
