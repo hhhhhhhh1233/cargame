@@ -35,7 +35,7 @@ public class vehicle : MonoBehaviour
 
     void Update()
     {
-		rotate();
+		//rotate();
 		accelerate();
 		aim();
 
@@ -47,11 +47,25 @@ public class vehicle : MonoBehaviour
 		}
 	}
 
-	public void OnSteer(InputValue value)
+	public void OnSteer(InputAction.CallbackContext context)
     {
-		Debug.Log(value);
-		//vehicleRigidBody.transform.Rotate(0, 120 * playerControls.Driving.Steer.ReadValue<float>() * Time.deltaTime, 0);
-		//anchor.transform.Rotate(0, -120 * playerControls.Driving.Steer.ReadValue<float>() * Time.deltaTime, 0);
+		vehicleRigidBody.transform.Rotate(0, 120 * context.ReadValue<float>() * Time.deltaTime, 0);
+		anchor.transform.Rotate(0, -120 * context.ReadValue<float>() * Time.deltaTime, 0);
+	}
+
+	public void OnAim(InputAction.CallbackContext context)
+	{
+		Debug.Log("Aiming!");
+	}
+
+	public void OnAccelerate(InputAction.CallbackContext context)
+	{
+		Debug.Log("Accelerating!");
+	}
+
+	public void OnDecelerate(InputAction.CallbackContext context)
+	{
+		Debug.Log("Decelerating!");
 	}
 
 	private void rotate()
@@ -72,6 +86,14 @@ public class vehicle : MonoBehaviour
 			if (playerControls.Driving.Aim.ReadValue<Vector2>().x != 0 && playerControls.Driving.Aim.ReadValue<Vector2>().y != 0)
 			{
 				Vector3 direction = Vector3.right * playerControls.Driving.Aim.ReadValue<Vector2>().x + Vector3.forward * playerControls.Driving.Aim.ReadValue<Vector2>().y;
+				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1500 * Time.deltaTime);
+			}
+		}
+		else
+		{
+			Vector3 direction = Vector3.right * playerControls.Driving.Aim.ReadValue<Vector2>().x + Vector3.forward * playerControls.Driving.Aim.ReadValue<Vector2>().y;
+			if (direction != Vector3.zero)
+			{
 				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1500 * Time.deltaTime);
 			}
 		}

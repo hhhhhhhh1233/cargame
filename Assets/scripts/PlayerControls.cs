@@ -81,7 +81,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""efe08a51-4640-4455-b35a-41f1fbaef329"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Steer"",
                     ""isComposite"": false,
@@ -92,7 +92,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""6fbd609a-899a-4cdc-8bf9-758323ce09f8"",
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone"",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Steer"",
                     ""isComposite"": false,
@@ -176,15 +176,59 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""3ecdc070-39f6-42cf-8a9e-79d60016b4f7"",
-                    ""path"": ""<Mouse>/position"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""2aed3a5b-8034-45a8-b5c8-b6bb0d6cd63d"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""fe09b861-b532-4d91-9af8-baa6b5ca184a"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
                     ""action"": ""Aim"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a482c03b-109f-4f09-9af2-2c6a1744ef1f"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""098581ac-aef4-4244-8594-14913defac18"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""54924742-b989-41df-a2d0-3cc7ccd1ae85"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",

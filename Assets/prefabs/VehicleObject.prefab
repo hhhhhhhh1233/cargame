@@ -159,7 +159,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3210850101020776398}
         m_TargetAssemblyTypeName: vehicle, Assembly-CSharp
         m_MethodName: OnSteer
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -171,18 +171,54 @@ MonoBehaviour:
     m_ActionId: 0f7093bd-d052-4c3a-9169-6cbf14c049a3
     m_ActionName: Driving/Steer[/Gamepad/leftStick/left,/Gamepad/leftStick/right,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3210850101020776398}
+        m_TargetAssemblyTypeName: vehicle, Assembly-CSharp
+        m_MethodName: OnAim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a96cd4be-b29e-49e6-b7f4-e9c8498aecde
     m_ActionName: Driving/Aim[/Gamepad/rightStick,/Mouse/position]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3210850101020776398}
+        m_TargetAssemblyTypeName: vehicle, Assembly-CSharp
+        m_MethodName: OnAccelerate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: fea4b37c-f2d5-4116-988e-ac292a7c2633
     m_ActionName: Driving/Accelerate[/Gamepad/rightTrigger,/Keyboard/w]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3210850101020776398}
+        m_TargetAssemblyTypeName: vehicle, Assembly-CSharp
+        m_MethodName: OnDecelerate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: be0182a5-4a78-4913-ad63-824d66991eee
     m_ActionName: Driving/Decelerate[/Gamepad/leftTrigger,/Keyboard/s]
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Driving
   m_SplitScreenIndex: -1
