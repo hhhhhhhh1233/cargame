@@ -62,6 +62,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""QuitGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""1761a2ef-505f-4181-978c-bab68a1a34e2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -273,6 +282,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Decelerate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a02a12b0-8de9-4a11-9846-fcfa756417f2"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""QuitGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb5ca6be-9d51-4537-883d-68d1c1d55690"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""QuitGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -313,6 +344,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Driving_Aim = m_Driving.FindAction("Aim", throwIfNotFound: true);
         m_Driving_Accelerate = m_Driving.FindAction("Accelerate", throwIfNotFound: true);
         m_Driving_Decelerate = m_Driving.FindAction("Decelerate", throwIfNotFound: true);
+        m_Driving_QuitGame = m_Driving.FindAction("QuitGame", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -376,6 +408,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Driving_Aim;
     private readonly InputAction m_Driving_Accelerate;
     private readonly InputAction m_Driving_Decelerate;
+    private readonly InputAction m_Driving_QuitGame;
     public struct DrivingActions
     {
         private @PlayerControls m_Wrapper;
@@ -384,6 +417,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Driving_Aim;
         public InputAction @Accelerate => m_Wrapper.m_Driving_Accelerate;
         public InputAction @Decelerate => m_Wrapper.m_Driving_Decelerate;
+        public InputAction @QuitGame => m_Wrapper.m_Driving_QuitGame;
         public InputActionMap Get() { return m_Wrapper.m_Driving; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -405,6 +439,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Decelerate.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnDecelerate;
                 @Decelerate.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnDecelerate;
                 @Decelerate.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnDecelerate;
+                @QuitGame.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnQuitGame;
+                @QuitGame.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnQuitGame;
+                @QuitGame.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnQuitGame;
             }
             m_Wrapper.m_DrivingActionsCallbackInterface = instance;
             if (instance != null)
@@ -421,6 +458,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Decelerate.started += instance.OnDecelerate;
                 @Decelerate.performed += instance.OnDecelerate;
                 @Decelerate.canceled += instance.OnDecelerate;
+                @QuitGame.started += instance.OnQuitGame;
+                @QuitGame.performed += instance.OnQuitGame;
+                @QuitGame.canceled += instance.OnQuitGame;
             }
         }
     }
@@ -449,5 +489,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnAccelerate(InputAction.CallbackContext context);
         void OnDecelerate(InputAction.CallbackContext context);
+        void OnQuitGame(InputAction.CallbackContext context);
     }
 }

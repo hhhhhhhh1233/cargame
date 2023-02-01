@@ -13,7 +13,11 @@ public class vehicle : MonoBehaviour
 	public bool isGamepad;
 	public Rigidbody vehicleRigidBody;
 	public GameObject anchor;
-
+	
+	private float steerInput = 0;
+	private float accelerateInput = 0;
+	private float decelerateInput = 0;
+	private Vector2 aimInput = Vector2.zero;
 
 	private void Awake()
 	{
@@ -35,7 +39,7 @@ public class vehicle : MonoBehaviour
 
     void Update()
     {
-		//rotate();
+		rotate();
 		accelerate();
 		aim();
 
@@ -49,49 +53,48 @@ public class vehicle : MonoBehaviour
 
 	public void OnSteer(InputAction.CallbackContext context)
     {
-		vehicleRigidBody.transform.Rotate(0, 120 * context.ReadValue<float>() * Time.deltaTime, 0);
-		anchor.transform.Rotate(0, -120 * context.ReadValue<float>() * Time.deltaTime, 0);
+		steerInput = context.ReadValue<float>();
 	}
 
 	public void OnAim(InputAction.CallbackContext context)
 	{
-		Debug.Log("Aiming!");
+		aimInput = context.ReadValue<Vector2>();
 	}
 
 	public void OnAccelerate(InputAction.CallbackContext context)
 	{
-		Debug.Log("Accelerating!");
+		accelerateInput = context.ReadValue<float>();
 	}
 
 	public void OnDecelerate(InputAction.CallbackContext context)
 	{
-		Debug.Log("Decelerating!");
+		decelerateInput = context.ReadValue<float>();
 	}
 
 	private void rotate()
     {
-		vehicleRigidBody.transform.Rotate(0, 120 * playerControls.Driving.Steer.ReadValue<float>() * Time.deltaTime, 0);
-		anchor.transform.Rotate(0, -120 * playerControls.Driving.Steer.ReadValue<float>() * Time.deltaTime, 0);
+		vehicleRigidBody.transform.Rotate(0, 120 * steerInput * Time.deltaTime, 0);
+		anchor.transform.Rotate(0, -120 * steerInput * Time.deltaTime, 0);
 	}
 
 	private void accelerate()
     {
-		vehicleRigidBody.AddForce(1000 * (playerControls.Driving.Accelerate.ReadValue<float>() - 0.8f * playerControls.Driving.Decelerate.ReadValue<float>()) * transform.forward * Time.deltaTime);
+		vehicleRigidBody.AddForce(1000 * (accelerateInput - 0.8f * decelerateInput) * transform.forward * Time.deltaTime);
 	}
 
 	private void aim()
     {
 		if (isGamepad)
 		{
-			if (playerControls.Driving.Aim.ReadValue<Vector2>().x != 0 && playerControls.Driving.Aim.ReadValue<Vector2>().y != 0)
+			if (aimInput.x != 0 && aimInput.y != 0)
 			{
-				Vector3 direction = Vector3.right * playerControls.Driving.Aim.ReadValue<Vector2>().x + Vector3.forward * playerControls.Driving.Aim.ReadValue<Vector2>().y;
+				Vector3 direction = Vector3.right * aimInput.x + Vector3.forward * aimInput.y;
 				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1500 * Time.deltaTime);
 			}
 		}
 		else
 		{
-			Vector3 direction = Vector3.right * playerControls.Driving.Aim.ReadValue<Vector2>().x + Vector3.forward * playerControls.Driving.Aim.ReadValue<Vector2>().y;
+			Vector3 direction = Vector3.right * aimInput.x + Vector3.forward * aimInput.y;
 			if (direction != Vector3.zero)
 			{
 				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1500 * Time.deltaTime);
@@ -102,5 +105,10 @@ public class vehicle : MonoBehaviour
 	public void OnDeviceChange(PlayerInput pi)
 	{
 		isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
+	}
+
+	public void OnQuitGame()
+	{
+		Application.Quit();
 	}
 }
