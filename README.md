@@ -1,4 +1,4 @@
-# Car Game
+# Car Game Prototype
 
 A test project I'm using to attempt to learn how to make an amazing rally game
 
