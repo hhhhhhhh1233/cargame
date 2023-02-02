@@ -71,6 +71,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""13ca7895-a030-4b5c-b36f-a7eabb218a8f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Respawn"",
+                    ""type"": ""Button"",
+                    ""id"": ""624ccf0e-d5e4-4794-92d2-e55b0ca0cc97"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -304,6 +322,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""QuitGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8965e7b9-e7c4-49e9-92c6-0ad56c37073e"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e0428ad-ed79-40c8-b445-b780042e59fa"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67cb166d-57d0-4662-868a-d413b0b5cfe2"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Respawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""695a1b01-88d2-483f-ba47-aaeef348f166"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Respawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -345,6 +407,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Driving_Accelerate = m_Driving.FindAction("Accelerate", throwIfNotFound: true);
         m_Driving_Decelerate = m_Driving.FindAction("Decelerate", throwIfNotFound: true);
         m_Driving_QuitGame = m_Driving.FindAction("QuitGame", throwIfNotFound: true);
+        m_Driving_Shoot = m_Driving.FindAction("Shoot", throwIfNotFound: true);
+        m_Driving_Respawn = m_Driving.FindAction("Respawn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -409,6 +473,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Driving_Accelerate;
     private readonly InputAction m_Driving_Decelerate;
     private readonly InputAction m_Driving_QuitGame;
+    private readonly InputAction m_Driving_Shoot;
+    private readonly InputAction m_Driving_Respawn;
     public struct DrivingActions
     {
         private @PlayerControls m_Wrapper;
@@ -418,6 +484,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Accelerate => m_Wrapper.m_Driving_Accelerate;
         public InputAction @Decelerate => m_Wrapper.m_Driving_Decelerate;
         public InputAction @QuitGame => m_Wrapper.m_Driving_QuitGame;
+        public InputAction @Shoot => m_Wrapper.m_Driving_Shoot;
+        public InputAction @Respawn => m_Wrapper.m_Driving_Respawn;
         public InputActionMap Get() { return m_Wrapper.m_Driving; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -442,6 +510,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @QuitGame.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnQuitGame;
                 @QuitGame.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnQuitGame;
                 @QuitGame.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnQuitGame;
+                @Shoot.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnShoot;
+                @Respawn.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnRespawn;
+                @Respawn.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnRespawn;
+                @Respawn.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnRespawn;
             }
             m_Wrapper.m_DrivingActionsCallbackInterface = instance;
             if (instance != null)
@@ -461,6 +535,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @QuitGame.started += instance.OnQuitGame;
                 @QuitGame.performed += instance.OnQuitGame;
                 @QuitGame.canceled += instance.OnQuitGame;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+                @Respawn.started += instance.OnRespawn;
+                @Respawn.performed += instance.OnRespawn;
+                @Respawn.canceled += instance.OnRespawn;
             }
         }
     }
@@ -490,5 +570,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnAccelerate(InputAction.CallbackContext context);
         void OnDecelerate(InputAction.CallbackContext context);
         void OnQuitGame(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnRespawn(InputAction.CallbackContext context);
     }
 }

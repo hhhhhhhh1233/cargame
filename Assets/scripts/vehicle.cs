@@ -13,6 +13,7 @@ public class vehicle : MonoBehaviour
 	public bool isGamepad;
 	public Rigidbody vehicleRigidBody;
 	public GameObject anchor;
+	public GameObject projectilePrefab;
 	
 	private float steerInput = 0;
 	private float accelerateInput = 0;
@@ -42,13 +43,6 @@ public class vehicle : MonoBehaviour
 		rotate();
 		accelerate();
 		aim();
-
-		if (Input.GetButton("Respawn") || transform.position.y < -2)
-		{
-			vehicleRigidBody.velocity = Vector3.zero;
-			transform.SetPositionAndRotation(new Vector3(0,3,-20), Quaternion.Euler(0, -90, 0));
-			anchor.transform.rotation = new Quaternion(0,0,0,0);
-		}
 	}
 
 	public void OnSteer(InputAction.CallbackContext context)
@@ -70,6 +64,14 @@ public class vehicle : MonoBehaviour
 	{
 		decelerateInput = context.ReadValue<float>();
 	}
+
+	public void OnShoot(InputAction.CallbackContext context)
+    {
+		if (context.ReadValue<float>() == 1)
+        {
+			Instantiate(projectilePrefab, transform.position, anchor.transform.rotation);
+        }
+    }
 
 	private void rotate()
     {
@@ -105,6 +107,16 @@ public class vehicle : MonoBehaviour
 	public void OnDeviceChange(PlayerInput pi)
 	{
 		isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
+	}
+
+	public void OnRespawn(InputAction.CallbackContext context)
+    {
+		if (context.ReadValue<float>() == 1)
+        {
+			vehicleRigidBody.velocity = Vector3.zero;
+			transform.SetPositionAndRotation(new Vector3(0, 3, -20), Quaternion.Euler(0, -90, 0));
+			anchor.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
 	}
 
 	public void OnQuitGame()
