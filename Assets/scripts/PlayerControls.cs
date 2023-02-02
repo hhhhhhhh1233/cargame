@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""eed8d8ec-573a-4d66-8179-cab599a4dc1e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -366,6 +375,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Respawn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""601526e4-8f82-4d0b-bfac-9c1e810c4a83"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""affdfefd-70ba-4d7b-be79-9ed547e7f52f"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -409,6 +440,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Driving_QuitGame = m_Driving.FindAction("QuitGame", throwIfNotFound: true);
         m_Driving_Shoot = m_Driving.FindAction("Shoot", throwIfNotFound: true);
         m_Driving_Respawn = m_Driving.FindAction("Respawn", throwIfNotFound: true);
+        m_Driving_UseItem = m_Driving.FindAction("UseItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -475,6 +507,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Driving_QuitGame;
     private readonly InputAction m_Driving_Shoot;
     private readonly InputAction m_Driving_Respawn;
+    private readonly InputAction m_Driving_UseItem;
     public struct DrivingActions
     {
         private @PlayerControls m_Wrapper;
@@ -486,6 +519,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @QuitGame => m_Wrapper.m_Driving_QuitGame;
         public InputAction @Shoot => m_Wrapper.m_Driving_Shoot;
         public InputAction @Respawn => m_Wrapper.m_Driving_Respawn;
+        public InputAction @UseItem => m_Wrapper.m_Driving_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_Driving; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -516,6 +550,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Respawn.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnRespawn;
                 @Respawn.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnRespawn;
                 @Respawn.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnRespawn;
+                @UseItem.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnUseItem;
+                @UseItem.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnUseItem;
+                @UseItem.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnUseItem;
             }
             m_Wrapper.m_DrivingActionsCallbackInterface = instance;
             if (instance != null)
@@ -541,6 +578,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Respawn.started += instance.OnRespawn;
                 @Respawn.performed += instance.OnRespawn;
                 @Respawn.canceled += instance.OnRespawn;
+                @UseItem.started += instance.OnUseItem;
+                @UseItem.performed += instance.OnUseItem;
+                @UseItem.canceled += instance.OnUseItem;
             }
         }
     }
@@ -572,5 +612,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnQuitGame(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnRespawn(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
 }

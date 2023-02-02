@@ -266,6 +266,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 624ccf0e-d5e4-4794-92d2-e55b0ca0cc97
     m_ActionName: Driving/Respawn[/XInputControllerWindows/buttonWest,/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3210850101020776398}
+        m_TargetAssemblyTypeName: vehicle, Assembly-CSharp
+        m_MethodName: OnUseItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: eed8d8ec-573a-4d66-8179-cab599a4dc1e
+    m_ActionName: Driving/UseItem[/XInputControllerWindows/leftShoulder,/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Driving
@@ -288,6 +304,7 @@ MonoBehaviour:
   vehicleRigidBody: {fileID: 3210850101020776396}
   anchor: {fileID: 3210850101133266494}
   projectilePrefab: {fileID: 3484231644899251866, guid: f7e9d59f744495848ad64e4a2ed25a46, type: 3}
+  obstaclePrefab: {fileID: 5174173754135415632, guid: 38297c545d5955743aab7ac31924722b, type: 3}
 --- !u!1 &3210850101133266494
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +485,7 @@ MonoBehaviour:
   vehicleRigidBody: {fileID: 0}
   anchor: {fileID: 0}
   projectilePrefab: {fileID: 0}
+  obstaclePrefab: {fileID: 0}
 --- !u!1 &3210850101850118116
 GameObject:
   m_ObjectHideFlags: 0

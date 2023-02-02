@@ -14,6 +14,7 @@ public class vehicle : MonoBehaviour
 	public Rigidbody vehicleRigidBody;
 	public GameObject anchor;
 	public GameObject projectilePrefab;
+	public GameObject obstaclePrefab;
 	
 	private float steerInput = 0;
 	private float accelerateInput = 0;
@@ -69,7 +70,15 @@ public class vehicle : MonoBehaviour
     {
 		if (context.ReadValue<float>() == 1)
         {
-			Instantiate(projectilePrefab, transform.position, anchor.transform.rotation);
+			Instantiate(projectilePrefab, transform.position + anchor.transform.forward * 2, anchor.transform.rotation);
+        }
+    }
+
+	public void OnUseItem(InputAction.CallbackContext context)
+    {
+		if (context.ReadValue<float>() == 0)
+        {
+			Instantiate(obstaclePrefab, transform.position + anchor.transform.forward * 2, anchor.transform.rotation);
         }
     }
 
