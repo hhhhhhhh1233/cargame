@@ -9,7 +9,7 @@ public class vehicle : MonoBehaviour
 	private CharacterController controller;
 	private PlayerControls playerControls;
 
-	public GameObject cam;
+	public Camera cam;
 	public bool isGamepad;
 	public Rigidbody vehicleRigidBody;
 	public GameObject anchor;
@@ -26,6 +26,7 @@ public class vehicle : MonoBehaviour
 		playerInput = GetComponent<PlayerInput>();
 		controller = GetComponent<CharacterController>();
 		playerControls = new PlayerControls();
+		//vehicleRigidBody.freezeRotation = true;
 	}
 
 	private void OnEnable()
@@ -44,6 +45,12 @@ public class vehicle : MonoBehaviour
 		rotate();
 		accelerate();
 		aim();
+		Debug.DrawLine(vehicleRigidBody.transform.position, vehicleRigidBody.transform.position+vehicleRigidBody.velocity, Color.white, 1.0f);
+		Debug.DrawLine(vehicleRigidBody.transform.position, vehicleRigidBody.transform.position+-100*Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right), Color.green, 1.0f);
+		Debug.DrawLine(vehicleRigidBody.transform.position, vehicleRigidBody.transform.position+(Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right)), Color.blue, 1.0f);
+		vehicleRigidBody.AddForce(Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right).magnitude * vehicleRigidBody.transform.forward * Time.deltaTime);
+		vehicleRigidBody.AddForce(-Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right) *100* Time.deltaTime);
+		vehicleRigidBody.velocity = Vector3.ClampMagnitude(vehicleRigidBody.velocity, 30);
 	}
 
 	public void OnSteer(InputAction.CallbackContext context)
@@ -79,6 +86,7 @@ public class vehicle : MonoBehaviour
 		if (context.ReadValue<float>() == 0)
         {
 			Instantiate(obstaclePrefab, transform.position + anchor.transform.forward * 2, anchor.transform.rotation);
+			cam.enabled = !cam.enabled;
         }
     }
 

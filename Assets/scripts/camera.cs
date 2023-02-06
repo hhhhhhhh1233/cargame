@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class camera : MonoBehaviour
 {
-    void Start()
-    {
-        Vehicle = GameObject.Find("Vehicle");
-    }
     public GameObject Vehicle;
 
     void Update()
