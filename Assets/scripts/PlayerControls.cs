@@ -98,6 +98,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drift"",
+                    ""type"": ""Button"",
+                    ""id"": ""a723a531-4881-475f-bc4d-ffabcf595013"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -397,6 +406,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3af90710-0b2d-463f-8c87-75203d2bab52"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Drift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d934d54-3d35-49be-9bbe-bc57d18f130a"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Drift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -441,6 +472,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Driving_Shoot = m_Driving.FindAction("Shoot", throwIfNotFound: true);
         m_Driving_Respawn = m_Driving.FindAction("Respawn", throwIfNotFound: true);
         m_Driving_UseItem = m_Driving.FindAction("UseItem", throwIfNotFound: true);
+        m_Driving_Drift = m_Driving.FindAction("Drift", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -508,6 +540,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Driving_Shoot;
     private readonly InputAction m_Driving_Respawn;
     private readonly InputAction m_Driving_UseItem;
+    private readonly InputAction m_Driving_Drift;
     public struct DrivingActions
     {
         private @PlayerControls m_Wrapper;
@@ -520,6 +553,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Driving_Shoot;
         public InputAction @Respawn => m_Wrapper.m_Driving_Respawn;
         public InputAction @UseItem => m_Wrapper.m_Driving_UseItem;
+        public InputAction @Drift => m_Wrapper.m_Driving_Drift;
         public InputActionMap Get() { return m_Wrapper.m_Driving; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -553,6 +587,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @UseItem.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnUseItem;
                 @UseItem.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnUseItem;
                 @UseItem.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnUseItem;
+                @Drift.started -= m_Wrapper.m_DrivingActionsCallbackInterface.OnDrift;
+                @Drift.performed -= m_Wrapper.m_DrivingActionsCallbackInterface.OnDrift;
+                @Drift.canceled -= m_Wrapper.m_DrivingActionsCallbackInterface.OnDrift;
             }
             m_Wrapper.m_DrivingActionsCallbackInterface = instance;
             if (instance != null)
@@ -581,6 +618,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @UseItem.started += instance.OnUseItem;
                 @UseItem.performed += instance.OnUseItem;
                 @UseItem.canceled += instance.OnUseItem;
+                @Drift.started += instance.OnDrift;
+                @Drift.performed += instance.OnDrift;
+                @Drift.canceled += instance.OnDrift;
             }
         }
     }
@@ -613,5 +653,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnRespawn(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnDrift(InputAction.CallbackContext context);
     }
 }

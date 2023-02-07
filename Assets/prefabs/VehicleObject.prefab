@@ -282,6 +282,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: eed8d8ec-573a-4d66-8179-cab599a4dc1e
     m_ActionName: Driving/UseItem[/XInputControllerWindows/leftShoulder,/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3210850101020776398}
+        m_TargetAssemblyTypeName: vehicle, Assembly-CSharp
+        m_MethodName: OnDrift
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a723a531-4881-475f-bc4d-ffabcf595013
+    m_ActionName: Driving/Drift[/XInputControllerWindows/buttonEast,/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Driving

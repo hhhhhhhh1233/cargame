@@ -15,7 +15,9 @@ public class vehicle : MonoBehaviour
 	public GameObject anchor;
 	public GameObject projectilePrefab;
 	public GameObject obstaclePrefab;
-	
+
+	private bool drift = false;
+
 	private float steerInput = 0;
 	private float accelerateInput = 0;
 	private float decelerateInput = 0;
@@ -45,12 +47,6 @@ public class vehicle : MonoBehaviour
 		rotate();
 		accelerate();
 		aim();
-		Debug.DrawLine(vehicleRigidBody.transform.position, vehicleRigidBody.transform.position+vehicleRigidBody.velocity, Color.white, 1.0f);
-		Debug.DrawLine(vehicleRigidBody.transform.position, vehicleRigidBody.transform.position+-100*Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right), Color.green, 1.0f);
-		Debug.DrawLine(vehicleRigidBody.transform.position, vehicleRigidBody.transform.position+(Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right)), Color.blue, 1.0f);
-		vehicleRigidBody.AddForce(Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right).magnitude * vehicleRigidBody.transform.forward * Time.deltaTime);
-		vehicleRigidBody.AddForce(-Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right) *100* Time.deltaTime);
-		vehicleRigidBody.velocity = Vector3.ClampMagnitude(vehicleRigidBody.velocity, 30);
 	}
 
 	public void OnSteer(InputAction.CallbackContext context)
@@ -90,6 +86,18 @@ public class vehicle : MonoBehaviour
         }
     }
 
+	public void OnDrift(InputAction.CallbackContext context)
+    {
+		if (context.ReadValue<float>() == 1)
+        {
+			drift = true;
+        }
+		else
+        {
+			drift = false;
+        }
+    }
+
 	private void rotate()
     {
 		vehicleRigidBody.transform.Rotate(0, 120 * steerInput * Time.deltaTime, 0);
@@ -99,6 +107,12 @@ public class vehicle : MonoBehaviour
 	private void accelerate()
     {
 		vehicleRigidBody.AddForce(1000 * (accelerateInput - 0.8f * decelerateInput) * transform.forward * Time.deltaTime);
+		//vehicleRigidBody.AddForce(Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right).magnitude * vehicleRigidBody.transform.forward * Time.deltaTime);
+		if (!drift)
+        {
+			vehicleRigidBody.AddForce(-Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right) * 100 * Time.deltaTime);
+        }
+		vehicleRigidBody.velocity = Vector3.ClampMagnitude(vehicleRigidBody.velocity, 30);
 	}
 
 	private void aim()
