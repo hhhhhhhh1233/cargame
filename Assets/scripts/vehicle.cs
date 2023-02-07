@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class vehicle : MonoBehaviour
 {
@@ -10,12 +11,12 @@ public class vehicle : MonoBehaviour
 	private PlayerControls playerControls;
 
 	public Camera cam;
-	public bool isGamepad;
 	public Rigidbody vehicleRigidBody;
 	public GameObject anchor;
 	public GameObject projectilePrefab;
 	public GameObject obstaclePrefab;
 
+	private bool isGamepad;
 	private bool drift = false;
 
 	private float steerInput = 0;
@@ -23,12 +24,18 @@ public class vehicle : MonoBehaviour
 	private float decelerateInput = 0;
 	private Vector2 aimInput = Vector2.zero;
 
+	public float rotationSpeed = 120.0f;
+	public float accelerationSpeed = 1000.0f;
+	public float decelerationEffectivity = 0.8f;
+	public float driftCompensation = 100.0f;
+	public float maxSpeed = 30.0f;
+	public float aimSpeed = 1500.0f;
+
 	private void Awake()
 	{
 		playerInput = GetComponent<PlayerInput>();
 		controller = GetComponent<CharacterController>();
 		playerControls = new PlayerControls();
-		//vehicleRigidBody.freezeRotation = true;
 	}
 
 	private void OnEnable()
@@ -82,7 +89,6 @@ public class vehicle : MonoBehaviour
 		if (context.ReadValue<float>() == 0)
         {
 			Instantiate(obstaclePrefab, transform.position + anchor.transform.forward * 2, anchor.transform.rotation);
-			cam.enabled = !cam.enabled;
         }
     }
 
@@ -100,19 +106,19 @@ public class vehicle : MonoBehaviour
 
 	private void rotate()
     {
-		vehicleRigidBody.transform.Rotate(0, 120 * steerInput * Time.deltaTime, 0);
-		anchor.transform.Rotate(0, -120 * steerInput * Time.deltaTime, 0);
+		vehicleRigidBody.transform.Rotate(0, rotationSpeed * steerInput * Time.deltaTime, 0);
+		anchor.transform.Rotate(0, -rotationSpeed * steerInput * Time.deltaTime, 0);
 	}
 
 	private void accelerate()
     {
-		vehicleRigidBody.AddForce(1000 * (accelerateInput - 0.8f * decelerateInput) * transform.forward * Time.deltaTime);
+		vehicleRigidBody.AddForce(accelerationSpeed * (accelerateInput - decelerationEffectivity * decelerateInput) * transform.forward * Time.deltaTime);
 		//vehicleRigidBody.AddForce(Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right).magnitude * vehicleRigidBody.transform.forward * Time.deltaTime);
 		if (!drift)
         {
-			vehicleRigidBody.AddForce(-Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right) * 100 * Time.deltaTime);
+			vehicleRigidBody.AddForce(-Vector3.Project(vehicleRigidBody.velocity, vehicleRigidBody.transform.right) * driftCompensation * Time.deltaTime);
         }
-		vehicleRigidBody.velocity = Vector3.ClampMagnitude(vehicleRigidBody.velocity, 30);
+		vehicleRigidBody.velocity = Vector3.ClampMagnitude(vehicleRigidBody.velocity, maxSpeed);
 	}
 
 	private void aim()
@@ -122,7 +128,7 @@ public class vehicle : MonoBehaviour
 			if (aimInput.x != 0 && aimInput.y != 0)
 			{
 				Vector3 direction = Vector3.right * aimInput.x + Vector3.forward * aimInput.y;
-				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1500 * Time.deltaTime);
+				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), aimSpeed * Time.deltaTime);
 			}
 		}
 		else
@@ -130,7 +136,7 @@ public class vehicle : MonoBehaviour
 			Vector3 direction = Vector3.right * aimInput.x + Vector3.forward * aimInput.y;
 			if (direction != Vector3.zero)
 			{
-				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), 1500 * Time.deltaTime);
+				anchor.transform.rotation = Quaternion.RotateTowards(anchor.transform.rotation, Quaternion.LookRotation(direction), aimSpeed * Time.deltaTime);
 			}
 		}
 	}
@@ -153,5 +159,10 @@ public class vehicle : MonoBehaviour
 	public void OnQuitGame()
 	{
 		Application.Quit();
+	}
+
+	public void OnSwitchTrack()
+    {
+		SceneManager.LoadScene("Track2");
 	}
 }
